@@ -1,6 +1,6 @@
-from actions.actionsImports import *
+from actions.actionsImport import *
 
-class AssignJobs(Action):
+class AssingJobs(Action):
     PROMPT_TEMPLATE: str = """
     ## 
     "明智地分配工作，確保專案成功並鼓勵團隊合作。

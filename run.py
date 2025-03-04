@@ -3,12 +3,16 @@ from metagpt.team import Team
 import platform
 import asyncio
 import fire
+from roles import leader
 
 async def creatTeam(idea: str, investment: float = 3.0, n_round: int = 5):
-    hire_roles = [PythonCoder(),JavaScriptCoder()]     
+    hire_roles = []     
+    
+    leaderProfile: str = 'leader 你是一位高效能的領導者，擁有出色的組織能力和溝通技巧。'    
+    leaderRole = leader.Leader(name="leader", profile=leaderProfile, hire_roles=hire_roles, idea=idea)
 
     team = Team()
-    team.hire([leader] + hire_roles)
+    team.hire([leaderRole])
     team.invest(investment)
     team.run_project(idea, send_to ="leader")
     await team.run(n_round=n_round)
@@ -17,7 +21,7 @@ async def creatTeam(idea: str, investment: float = 3.0, n_round: int = 5):
 
 
 def main(
-    idea: str = "",
+    idea: str = "write a hello word with javascript",
     investment: float = 3.0,
     n_round: int = 5,
 ):

@@ -1,6 +1,6 @@
-from actions.actionsImports import *
+from actions.actionsImport import *
 
-class SimpleWriteCode(Action):
+class WriteCodes(Action):
     PROMPT_TEMPLATE: str = """
     {instruction}.
     Return ``` your_code_here ``` with NO other texts,
@@ -14,13 +14,13 @@ class SimpleWriteCode(Action):
 
         rsp = await self._aask(prompt)
 
-        code_text = SimpleWriteCode.parse_code(rsp)
+        code_text = WriteCodes.parse_code(rsp)
         
         return code_text
 
     @staticmethod
     def parse_code(rsp):
-        pattern = r"```python(.*)```"
+        pattern = r"```*```"
         match = re.search(pattern, rsp, re.DOTALL)
         code_text = match.group(1) if match else rsp
         return code_text
