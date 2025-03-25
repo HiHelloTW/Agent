@@ -1,4 +1,4 @@
-from actions.actionsImport import * 
+from actions.utils import * 
 
 class HelloWorldJS(Action):
     PROMPT_TEMPLATE: str = """

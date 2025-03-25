@@ -1,10 +1,8 @@
-from roles.rolesImport import *
+from roles.utils import *
 
-class Leader(Role):
+class Creater(Role):
     name: str= ""
     idea: str= ""
-    profile: str = ""
-    hire_roles: list[Role] = []
     
     def __init__(self,**kwargs):
         super().__init__(**kwargs)

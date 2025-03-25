@@ -2,4 +2,84 @@
     "env": {
         "desc": "",
         "roles": {
-            
+            "": {
+                "name": "creater",
+                "profile": "",
+                "goal": "",
+                "constraints": "",
+                "desc": "",
+                "is_human": false,
+                "role_id": "",
+                "states": [
+                    "0. CreateNewAction"
+                ],
+                "actions": [
+                    {
+                        "name": "CreateNewAction",
+                        "i_context": "",
+                        "prefix": "You are a , named creater, your goal is . ",
+                        "desc": "",
+                        "PROMPT_TEMPLATE": "\n    Please read the following in  carefully, and step by step handle the following tasks\n    {instruction} \n    \n    1. Ignore the subject in the text.\n    \n    2. Following the step 1, Use the remaining content to generate a prompt to process the content.\n\n    3. Following the step 2, generate a JSON format :\n    prompt:  \"\", // The full generated prompt\n    name: \"\", // A short name for the prompt, following Python's naming convention.\n    class_name: \"\" // A short name for the prompt, following Python's class name naming convention.\n    \n    ",
+                        "__module_class_name": "actions.create_new_action.CreateNewAction"
+                    }
+                ],
+                "rc": {
+                    "memory": {
+                        "storage": [],
+                        "index": {
+                            "metagpt.actions.add_requirement.UserRequirement": []
+                        },
+                        "ignore_id": false
+                    },
+                    "working_memory": {
+                        "storage": [],
+                        "index": {},
+                        "ignore_id": false
+                    },
+                    "state": 0,
+                    "watch": [
+                        "metagpt.actions.add_requirement.UserRequirement"
+                    ],
+                    "react_mode": "react",
+                    "max_react_loop": 1
+                },
+                "addresses": [
+                    "creater",
+                    "roles.creater.Creater"
+                ],
+                "planner": {
+                    "plan": {
+                        "goal": "",
+                        "context": "",
+                        "tasks": [],
+                        "task_map": {},
+                        "current_task_id": ""
+                    },
+                    "working_memory": {
+                        "storage": [],
+                        "index": {},
+                        "ignore_id": false
+                    },
+                    "auto_run": false
+                },
+                "recovered": false,
+                "latest_observed_msg": {
+                    "id": "c8ad35eb2f6548b685597eafb40d6d97",
+                    "content": "Generate a python code",
+                    "instruct_content": null,
+                    "role": "Human",
+                    "cause_by": "metagpt.actions.add_requirement.UserRequirement",
+                    "sent_from": "",
+                    "send_to": [
+                        "creater"
+                    ]
+                },
+                "idea": "Generate a python code",
+                "__module_class_name": "roles.creater.Creater"
+            }
+        },
+        "history": "\nHuman: Generate a python code"
+    },
+    "investment": 3.0,
+    "idea": "Generate a python code"
+}

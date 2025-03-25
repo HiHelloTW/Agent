@@ -1,29 +1,30 @@
 import json
-from actions.actionsImport import *
-
+from actions.utils import *
 class CreateNewAction(Action):
     PROMPT_TEMPLATE: str = """
-    Please carefully read the following content requirements and generate a response based on them:  
-    ""{instruction}""
+    Please read the following in """""" carefully, and step by step handle the following tasks
+    """"{instruction} """"
+    
+    1. Ignore the subject in the text.
+    
+    2. Following the step 1, Use the remaining content to generate a prompt to process the content.
 
-    Please compose a complete response according to the above requirements. Be sure to follow these two points:  
-    1. Response must include the following two parts:  
-   - prompt: Generated complete prompt
-   - name: A short name for the prompt without space
+    3. Following the step 2, generate a JSON format only need JSON data:
+    prompt:  "", // The full generated prompt
+    name: "", // A short name for the prompt, following Python's naming convention.
+    class_name: "" // A short name for the prompt, following Python's class name naming convention.
+    
+    4. Make sure the answer is only JSON
+    
+    5. Ensure the JSON format is correct
     """
 
     name: str = "CreateNewAction"
 
     async def run(self, instruction: str):
-        prompt = self.PROMPT_TEMPLATE.format(instruction=instruction)
-
-        rsp = await self._aask(prompt)
+        rsp = await self._aask(self.PROMPT_TEMPLATE.format(instruction=instruction))
+        generate_new_action(*extract_prompt_name(rsp))
         
-        prompt, name = extract_prompt_name(rsp)
-        
-        generate_new_action(prompt, name)
-        return
-    
 import os
 
 def extract_prompt_name(response: str):
@@ -36,20 +37,20 @@ def extract_prompt_name(response: str):
     
     try:
         data = json.loads(json_str)
-        return data.get("prompt"), data.get("name")
+        return data.get("prompt"), data.get("name"), data.get("class_name")
     except json.JSONDecodeError:
         return None
     
-def generate_new_action(prompt, name):
-    code = f'''from actions.actionsImport import * 
+def generate_new_action(prompt, name, class_name):
+    code = f'''from actions.utils import * 
 
-class {name}(Action):
+class {class_name}(Action):
     PROMPT_TEMPLATE: str = """
     {{instruction}}.
     {prompt}
     """
 
-    name: str = "{name}"
+    name: str = "{class_name}"
 
     async def run(self, instruction: str):
         prompt = self.PROMPT_TEMPLATE.format(instruction=instruction)

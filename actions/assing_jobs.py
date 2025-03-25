@@ -1,4 +1,4 @@
-from actions.actionsImport import *
+from actions.utils import *
 
 class AssingJobs(Action):
     PROMPT_TEMPLATE: str = """
@@ -17,7 +17,7 @@ class AssingJobs(Action):
     請開始分配任務，並確保考慮到團隊背景成員的強項"
     決定後只用 "<成員名稱>" 生成以下文字 
     例如:
-    <Leader>。
+    <Creater>。
     """
     def __init__(self, name="AssignJobs", context=None, llm=None, **kwargs):
         super().__init__(**kwargs)
