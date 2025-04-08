@@ -25,6 +25,8 @@ class CreateNewAction(Action):
         rsp = await self._aask(self.PROMPT_TEMPLATE.format(instruction=instruction))
         generate_new_action(*extract_prompt_name(rsp))
         
+    
+        
 import os
 
 def extract_prompt_name(response: str):
@@ -62,10 +64,7 @@ class {class_name}(Action):
     if name:
         # 建立 Python 檔案路徑
         file_path = os.path.join(os.getcwd(), "actions", f"{name}.py")
-        print("File Path:", file_path)
 
 
         with open(file_path, "w", encoding="utf-8") as file:
             file.write(code)
-    
-    print(f"File created at: {file_path}")
