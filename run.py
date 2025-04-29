@@ -18,7 +18,7 @@ async def creatTeam(idea: str, investment: float = 3.0, n_round: int = 5):
 
 
 def main(
-    idea: str = "plant the tree",
+    idea: str = "teach me how to creat a strawberry cake",
     investment: float = 3.0,
     n_round: int = 5,
 ):

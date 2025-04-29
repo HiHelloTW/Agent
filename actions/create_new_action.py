@@ -1,9 +1,11 @@
 import json
 from actions.utils import *
+import importlib.util
+
 class CreateNewAction(Action):
     PROMPT_TEMPLATE: str = """
-    Please read the following in """""" carefully, and step by step handle the following tasks
-    """"{instruction} """"
+    Please, based on the requirements enclosed in << >> below, provide a prompt that can solve the following problem, and ensure it adheres to the five points listed below.
+    <<{instruction}>>
     
     1. Ignore the subject in the text.
     
@@ -23,7 +25,7 @@ class CreateNewAction(Action):
 
     async def run(self, instruction: str):
         rsp = await self._aask(self.PROMPT_TEMPLATE.format(instruction=instruction))
-        generate_new_action(*extract_prompt_name(rsp))
+        return generate_new_action(*extract_prompt_name(rsp))
         
     
         
@@ -60,11 +62,25 @@ class {class_name}(Action):
         rsp = await self._aask(prompt)
         
         return rsp'''
-    
     if name:
         # 建立 Python 檔案路徑
         file_path = os.path.join(os.getcwd(), "actions", f"{name}.py")
 
-
+        # 寫入檔案
         with open(file_path, "w", encoding="utf-8") as file:
             file.write(code)
+
+        # 動態載入剛剛寫好的 module
+        spec = importlib.util.spec_from_file_location(name, file_path)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+
+        # 取出 class，並回傳
+        cls = getattr(module, class_name)
+
+        # ✅ 產生 instance，並回傳
+        instance: Action = cls()
+        return instance
+
+    else:
+        raise ValueError("Parameter 'name' is required to save the file.")

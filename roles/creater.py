@@ -1,5 +1,7 @@
 from roles.utils import *
-import subprocess
+from metagpt.actions.action import Action
+import inspect
+
 class Creater(Role):
     name: str= ""
     idea: str= ""
@@ -17,14 +19,10 @@ class Creater(Role):
     async def _act(self) -> Message:
         logger.info(f"{self._setting}: to do {self.rc.todo}")
         todo = self.rc.todo 
-        print('todo:', todo)
-        print('todo.run:', todo.run)
-                
-        rsp = await todo.run(instruction=self.idea)    
+        print('todo: ', todo)
+        rsp = await todo.run(instruction=self.idea)
         
-        print(1,todo.name)
-        if todo.name == 'CreateNewAction':
-            print('run py')
-            subprocess.run(["python", "./run.py"]) 
-        
-        return rsp
+        if isinstance(rsp, Action):
+            print('run created action')
+            created_action_rsp = await rsp.run(instruction=self.idea)
+            print(created_action_rsp)
