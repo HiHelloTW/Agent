@@ -11,35 +11,7 @@
                 "is_human": false,
                 "role_id": "",
                 "states": [
-                    "0. CreateNewAction",
-                    "1. AssingJobs",
-                    "2. BuyDrinkPrompt",
-                    "3. CreateNewAction",
-                    "4. KeyInfoExtractor",
-                    "5. FoldPaperAirplane",
-                    "6. GeneralTrainingPlan",
-                    "7. HelloWorldJS",
-                    "8. PaperAirplaneInstructions",
-                    "9. PlantTreePrompt",
-                    "10. TextProcessorPrompt",
-                    "11. TextSummarizerNoSubject",
-                    "12. CatTrainingPrompt",
-                    "13. EnglishToFrenchTranslator",
-                    "14. TurnOnLightPrompt",
-                    "15. WriteCodes"
+                    "0. CreateNewAction"
                 ],
                 "actions": [
-                    {
-                        "name": "CreateNewAction",
-                        "i_context": "",
-                        "prefix": "You are a , named creater, your goal is . ",
-                        "desc": "",
-                        "PROMPT_TEMPLATE": "\n    Please read the following in  carefully, and step by step handle the following tasks\n    {instruction} \n    \n    1. Ignore the subject in the text.\n    \n    2. Following the step 1, Use the remaining content to generate a prompt to process the content.\n\n    3. Following the step 2, generate a JSON format only need JSON data:\n    prompt:  \"\", // The full generated prompt\n    name: \"\", // A short name for the prompt, following Python's naming convention.\n    class_name: \"\" // A short name for the prompt, following Python's class name naming convention.\n    \n    4. Make sure the answer is only JSON\n    \n    5. Ensure the JSON format is correct\n    ",
-                        "__module_class_name": "actions.create_new_action.CreateNewAction"
-                    },
-                    {
-                        "name": "AssignJobs",
-                        "i_context": "",
-                        "prefix": "You are a , named creater, your goal is . ",
-                        "desc": "",
-                        "PROMPT_TEMPLATE": 
+                    

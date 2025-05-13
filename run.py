@@ -18,7 +18,7 @@ async def creatTeam(idea: str, investment: float = 3.0, n_round: int = 5):
 
 
 def main(
-    idea: str = "teach me how to creat a strawberry cake",
+    idea: str = "查詢今天新聞，並整理成 text",
     investment: float = 3.0,
     n_round: int = 5,
 ):

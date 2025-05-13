@@ -1,10 +1,10 @@
 import json
-from actions.utils import *
+from actions._utils import *
 import importlib.util
 
 class CreateNewAction(Action):
     PROMPT_TEMPLATE: str = """
-    Please, based on the requirements enclosed in << >> below, provide a prompt that can solve the following problem, and ensure it adheres to the five points listed below.
+    Please, based on the requirements enclosed by step {step}  in << >> below, provide a prompt that can solve the following problem, and ensure it adheres to the five points listed below.
     <<{instruction}>>
     
     1. Ignore the subject in the text.
@@ -23,8 +23,8 @@ class CreateNewAction(Action):
 
     name: str = "CreateNewAction"
 
-    async def run(self, instruction: str):
-        rsp = await self._aask(self.PROMPT_TEMPLATE.format(instruction=instruction))
+    async def run(self, instruction: str, step: int, action_history:list[str]):
+        rsp = await self._aask(self.PROMPT_TEMPLATE.format(instruction=instruction, step=step))
         return generate_new_action(*extract_prompt_name(rsp))
         
     
@@ -46,18 +46,18 @@ def extract_prompt_name(response: str):
         return None
     
 def generate_new_action(prompt, name, class_name):
-    code = f'''from actions.utils import * 
+    code = f'''from actions._utils import * 
 
 class {class_name}(Action):
     PROMPT_TEMPLATE: str = """
-    {{instruction}}.
+    {{action_history}}.
     {prompt}
     """
 
     name: str = "{class_name}"
 
-    async def run(self, instruction: str):
-        prompt = self.PROMPT_TEMPLATE.format(instruction=instruction)
+    async def run(self, instruction: str, step: int, action_history:list[str]):
+        prompt = self.PROMPT_TEMPLATE.format(action_history=action_history)
 
         rsp = await self._aask(prompt)
         
