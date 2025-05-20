@@ -11,7 +11,67 @@
                 "is_human": false,
                 "role_id": "",
                 "states": [
-                    "0. CreateNewAction"
+                    "0. CreateNewAction",
+                    "1. TodaysNewsSummarizer"
                 ],
                 "actions": [
-                    
+                    {
+                        "name": "CreateNewAction",
+                        "i_context": "",
+                        "prefix": "You are a , named creater, your goal is . ",
+                        "desc": "",
+                        "PROMPT_TEMPLATE": "\n    Please, based on the requirements enclosed by step {step}  in << >> below, provide a prompt that can solve the following problem, and ensure it adheres to the five points listed below.\n    <<{instruction}>>\n    \n    1. Ignore the subject in the text.\n    \n    2. Following the step 1, Use the remaining content to generate a prompt to process the content.\n\n    3. Following the step 2, generate a JSON format only need JSON data:\n    prompt:  \"\", // The full generated prompt\n    name: \"\", // A short name for the prompt, following Python's naming convention.\n    class_name: \"\" // A short name for the prompt, following Python's class name naming convention.\n    \n    4. Make sure the answer is only JSON\n    \n    5. Ensure the JSON format is correct\n    ",
+                        "__module_class_name": "actions._create_new_action.CreateNewAction"
+                    },
+                    {
+                        "name": "TodaysNewsSummarizer",
+                        "i_context": "",
+                        "prefix": "You are a , named creater, your goal is . ",
+                        "desc": "",
+                        "PROMPT_TEMPLATE": "\n    {action_history}.\n    Summarize today's news in a single paragraph.\n    ",
+                        "__module_class_name": "get_todays_news_summary.TodaysNewsSummarizer"
+                    }
+                ],
+                "rc": {
+                    "memory": {
+                        "storage": [],
+                        "index": {
+                            "metagpt.actions.add_requirement.UserRequirement": []
+                        },
+                        "ignore_id": false
+                    },
+                    "working_memory": {
+                        "storage": [],
+                        "index": {},
+                        "ignore_id": false
+                    },
+                    "state": -1,
+                    "watch": [
+                        "metagpt.actions.add_requirement.UserRequirement"
+                    ],
+                    "react_mode": "react",
+                    "max_react_loop": 3
+                },
+                "addresses": [
+                    "roles.creater.Creater",
+                    "creater"
+                ],
+                "planner": {
+                    "plan": {
+                        "goal": "",
+                        "context": "",
+                        "tasks": [],
+                        "task_map": {},
+                        "current_task_id": ""
+                    },
+                    "working_memory": {
+                        "storage": [],
+                        "index": {},
+                        "ignore_id": false
+                    },
+                    "auto_run": false
+                },
+                "recovered": false,
+                "latest_observed_msg": {
+                    "id": "dd472929d994459295a9cd928238d253",
+                    "content": 

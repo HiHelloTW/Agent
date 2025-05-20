@@ -87,7 +87,7 @@ class Creater(Role):
             )
         
         if not isinstance(rsp, Action):
-            self.action_history.append(rsp)        
+            self.action_history.append(rsp + "@@@")        
         if isinstance(rsp, Action):
             print('set actions')
             self.actions = load_classes_from_folder('./actions')
@@ -100,7 +100,7 @@ class Creater(Role):
                 step=self.action_step,
                 action_history=self.action_history
                 )
-            self.action_history.append(created_action_rsp)       
+            self.action_history.append(created_action_rsp + "@@@")       
              
         print(self.action_history)
     

@@ -4,12 +4,15 @@ import importlib.util
 
 class CreateNewAction(Action):
     PROMPT_TEMPLATE: str = """
-    Please, based on the requirements enclosed by step {step}  in << >> below, provide a prompt that can solve the following problem, and ensure it adheres to the five points listed below.
-    <<{instruction}>>
+    Please, based on the requirements enclosed by instruction {step}  in << >> below, provide a prompt that can solve the following problem, and ensure it adheres to the five points listed below.
+    <<
+    instruction:
+    {instruction}
+    >>
     
-    1. Ignore the subject in the text.
+    1. Please refer only to **instruction {step}**.
     
-    2. Following the step 1, Use the remaining content to generate a prompt to process the content.
+    2. Following the step 1, Exclude everything from other instruction.
 
     3. Following the step 2, generate a JSON format only need JSON data:
     prompt:  "", // The full generated prompt
@@ -49,9 +52,12 @@ def generate_new_action(prompt, name, class_name):
     code = f'''from actions._utils import * 
 
 class {class_name}(Action):
-    PROMPT_TEMPLATE: str = """
+    PROMPT_TEMPLATE: str = """ 
+    If Action history contains content, follow the Action history in the <<>> and {prompt}; otherwise, just {prompt}.
+
+    <<Action history:
     {{action_history}}.
-    {prompt}
+    >>
     """
 
     name: str = "{class_name}"
